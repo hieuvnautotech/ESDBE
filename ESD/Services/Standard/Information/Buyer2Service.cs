@@ -14,7 +14,7 @@ namespace ESD.Services.Standard.Information
     public interface IBuyer2Service
     {
         Task<ResponseModel<IEnumerable<BuyerDto>?>> Get(BuyerDto model);
-        Task<ResponseModel<IEnumerable<BuyerDto>?>> GetAll(BuyerDto model);
+        Task<ResponseModel<IEnumerable<Buyer2Dto>?>> GetAll(Buyer2Dto model);
         Task<string> Create(BuyerDto model);
         Task<ResponseModel<BuyerDto?>> GetById(long buyerid);
         Task<string> Modify(BuyerDto model);
@@ -24,7 +24,7 @@ namespace ESD.Services.Standard.Information
     }
 
     [ScopedRegistration]
-    public class Buyer2Service : IBuyerService
+    public class Buyer2Service : IBuyer2Service
     {
         private readonly ISqlDataAccess _sqlDataAccess;
 
@@ -68,11 +68,11 @@ namespace ESD.Services.Standard.Information
             }
             
         }
-        public async Task<ResponseModel<IEnumerable<BuyerDto>?>> GetAll(BuyerDto model)
+        public async Task<ResponseModel<IEnumerable<Buyer2Dto>?>> GetAll(Buyer2Dto model)
         {
-            var returnData = new ResponseModel<IEnumerable<BuyerDto>?>();
-            var proc = $"Usp_Buyer_GetAll";
-            var data = await _sqlDataAccess.LoadDataUsingStoredProcedure<BuyerDto>(proc);
+            var returnData = new ResponseModel<IEnumerable<Buyer2Dto>?>();
+            var proc = $"Usp_Buyer2_GetAll";
+            var data = await _sqlDataAccess.LoadDataUsingStoredProcedure<Buyer2Dto>(proc);
 
             if (!data.Any())
             {
