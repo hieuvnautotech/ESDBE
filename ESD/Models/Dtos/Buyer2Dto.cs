@@ -19,12 +19,12 @@ namespace ESD.Models.Dtos
         public string Address { get; set; } = string.Empty;
         public DateTime? DateSignContract { get; set; }
     }
-    //public partial class BuyerExcelDto
-    //{
-    //    public string Buyer2Code { get; set; }
-    //    public string Buyer2Name { get; set; }
-    //    public string Description { get; set; }
-    //    public string Contact { get; set; }
+    public partial class BuyerExcelDto
+    {
+        public string Buyer2Code { get; set; }
+        public string Buyer2Name { get; set; }
+        public string Description2 { get; set; }
+        public string Contact2 { get; set; }
 
-    //}
+    }
 }

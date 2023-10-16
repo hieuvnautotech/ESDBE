@@ -13,14 +13,14 @@ namespace ESD.Services.Standard.Information
 {
     public interface IBuyer2Service
     {
-        Task<ResponseModel<IEnumerable<BuyerDto>?>> Get(BuyerDto model);
+        Task<ResponseModel<IEnumerable<Buyer2Dto>?>> Get(Buyer2Dto model);
         Task<ResponseModel<IEnumerable<Buyer2Dto>?>> GetAll(Buyer2Dto model);
-        Task<string> Create(BuyerDto model);
-        Task<ResponseModel<BuyerDto?>> GetById(long buyerid);
-        Task<string> Modify(BuyerDto model);
-        Task<string> Delete(BuyerDto model);
-        Task<ResponseModel<IEnumerable<BuyerDto>?>> GetActive(BuyerDto model);
-        Task<ResponseModel<BuyerDto?>> CreateByExcel(List<BuyerExcelDto> model, long userCreate);
+        Task<string> Create(Buyer2Dto model);
+        Task<ResponseModel<Buyer2Dto?>> GetById(long buyerid);
+        Task<string> Modify(Buyer2Dto model);
+        Task<string> Delete(Buyer2Dto model);
+        Task<ResponseModel<IEnumerable<Buyer2Dto>?>> GetActive(Buyer2Dto model);
+        Task<ResponseModel<Buyer2Dto?>> CreateByExcel(List<BuyerExcelDto> model, long userCreate);
     }
 
     [ScopedRegistration]
@@ -33,11 +33,11 @@ namespace ESD.Services.Standard.Information
             _sqlDataAccess = sqlDataAccess;
         }
 
-        public async Task<ResponseModel<IEnumerable<BuyerDto>?>> Get(BuyerDto model)
+        public async Task<ResponseModel<IEnumerable<Buyer2Dto>?>> Get(Buyer2Dto model)
         {
             try
             {
-                var returnData = new ResponseModel<IEnumerable<BuyerDto>?>();
+                var returnData = new ResponseModel<IEnumerable<Buyer2Dto>?>();
                 var proc = $"Usp_Buyer_Get";
                 var param = new DynamicParameters();
                 param.Add("@page", model.page);
@@ -46,7 +46,7 @@ namespace ESD.Services.Standard.Information
                 param.Add("@BuyerName", model.BuyerName);
                 param.Add("@isActived", model.isActived);
                 param.Add("@totalRow", 0, DbType.Int32, ParameterDirection.Output);
-                var data = await _sqlDataAccess.LoadDataUsingStoredProcedure<BuyerDto>(proc, param);
+                var data = await _sqlDataAccess.LoadDataUsingStoredProcedure<Buyer2Dto>(proc, param);
 
                 if (!data.Any())
                 {
@@ -87,7 +87,7 @@ namespace ESD.Services.Standard.Information
             return returnData;
         }
 
-        public async Task<string> Create(BuyerDto model)
+        public async Task<string> Create(Buyer2Dto model)
         {
             string proc = "Usp_Buyer_Create";
             var param = new DynamicParameters();
@@ -110,13 +110,13 @@ namespace ESD.Services.Standard.Information
             //throw new NotImplementedException();
         }
 
-        public async Task<ResponseModel<BuyerDto?>> GetById(long buyerid)
+        public async Task<ResponseModel<Buyer2Dto?>> GetById(long buyerid)
         {
-            var returnData = new ResponseModel<BuyerDto?>();
+            var returnData = new ResponseModel<Buyer2Dto?>();
             var proc = $"Usp_Buyer_GetById";
             var param = new DynamicParameters();
             param.Add("@BuyerId", buyerid);
-            var data = await _sqlDataAccess.LoadDataUsingStoredProcedure<BuyerDto>(proc, param);
+            var data = await _sqlDataAccess.LoadDataUsingStoredProcedure<Buyer2Dto>(proc, param);
             returnData.Data = data.FirstOrDefault();
             if (!data.Any())
             {
@@ -126,7 +126,7 @@ namespace ESD.Services.Standard.Information
             return returnData;
         }
 
-        public async Task<string> Modify(BuyerDto model)
+        public async Task<string> Modify(Buyer2Dto model)
         {
             string proc = "Usp_Buyer_Modify";
             var param = new DynamicParameters();
@@ -148,7 +148,7 @@ namespace ESD.Services.Standard.Information
 
             return await _sqlDataAccess.SaveDataUsingStoredProcedure<int>(proc, param);
         }
-        public async Task<string> Delete(BuyerDto model)
+        public async Task<string> Delete(Buyer2Dto model)
         {
             string proc = "Usp_Buyer_Delete";
             var param = new DynamicParameters();
@@ -162,11 +162,11 @@ namespace ESD.Services.Standard.Information
             return await _sqlDataAccess.SaveDataUsingStoredProcedure<int>(proc, param);
         }
 
-        public async Task<ResponseModel<IEnumerable<BuyerDto>?>> GetActive(BuyerDto model)
+        public async Task<ResponseModel<IEnumerable<Buyer2Dto>?>> GetActive(Buyer2Dto model)
         {
-            var returnData = new ResponseModel<IEnumerable<BuyerDto>?>();
+            var returnData = new ResponseModel<IEnumerable<Buyer2Dto>?>();
             var proc = $"Usp_Buyer_GetActive";
-            var data = await _sqlDataAccess.LoadDataUsingStoredProcedure<BuyerDto>(proc);
+            var data = await _sqlDataAccess.LoadDataUsingStoredProcedure<Buyer2Dto>(proc);
 
             if (!data.Any())
             {
@@ -180,9 +180,9 @@ namespace ESD.Services.Standard.Information
 
             return returnData;
         }
-        public async Task<ResponseModel<BuyerDto?>> CreateByExcel(List<BuyerExcelDto> model, long userCreate)
+        public async Task<ResponseModel<Buyer2Dto?>> CreateByExcel(List<BuyerExcelDto> model, long userCreate)
         {
-            var returnData = new ResponseModel<BuyerDto?>();
+            var returnData = new ResponseModel<Buyer2Dto?>();
 
             var jsonLotList = JsonConvert.SerializeObject(model);
 
