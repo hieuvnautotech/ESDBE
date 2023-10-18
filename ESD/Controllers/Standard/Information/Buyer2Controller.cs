@@ -81,6 +81,45 @@ namespace ESD.Controllers.Standard.Information
         }
 
 
+        [HttpPut("modify-buyer")]
+        [PermissionAuthorization(PermissionConst.BUYER_UPDATE)]
+        public async Task<IActionResult> Modify([FromBody] Buyer2Dto model)
+        {
+            var returnData = new ResponseModel<Buyer2Dto?>();
+
+            var validator = new Buyer2Validator();
+            var validateResults = validator.Validate(model);
+            if (!validateResults.IsValid)
+            {
+                returnData.HttpResponseCode = 400;
+                returnData.ResponseMessage = validateResults.Errors[0].ToString();
+                return Ok(returnData);
+            }
+
+            var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var userId = _jwtService.ValidateToken(token);
+            model.modifiedBy = long.Parse(userId);
+
+            var result = await _Buyer2Service.Modify(model);
+
+            switch (result)
+            {
+                case StaticReturnValue.SYSTEM_ERROR:
+                    returnData.HttpResponseCode = 500;
+                    break;
+                case StaticReturnValue.SUCCESS:
+                    returnData = await _Buyer2Service.GetById(model.BuyerId);
+                    break;
+                default:
+                    returnData.HttpResponseCode = 400;
+                    break;
+            }
+
+            returnData.ResponseMessage = result;
+            return Ok(returnData);
+        }
+
+
 
 
 

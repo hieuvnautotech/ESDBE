@@ -89,7 +89,7 @@ namespace ESD.Services.Standard.Information
 
         public async Task<string> Create(Buyer2Dto model)
         {
-            string proc = "Usp_Buyer_Create";
+            string proc = "Usp_Buyer2_Create";
             var param = new DynamicParameters();
             param.Add("@BuyerId", model.BuyerId);
             param.Add("@BuyerCode", model.BuyerCode);
@@ -113,7 +113,7 @@ namespace ESD.Services.Standard.Information
         public async Task<ResponseModel<Buyer2Dto?>> GetById(long buyerid)
         {
             var returnData = new ResponseModel<Buyer2Dto?>();
-            var proc = $"Usp_Buyer_GetById";
+            var proc = $"Usp_Buyer2_GetById";
             var param = new DynamicParameters();
             param.Add("@BuyerId", buyerid);
             var data = await _sqlDataAccess.LoadDataUsingStoredProcedure<Buyer2Dto>(proc, param);
@@ -128,7 +128,7 @@ namespace ESD.Services.Standard.Information
 
         public async Task<string> Modify(Buyer2Dto model)
         {
-            string proc = "Usp_Buyer_Modify";
+            string proc = "Usp_Buyer2_Modify";
             var param = new DynamicParameters();
             param.Add("@BuyerId", model.BuyerId);
             param.Add("@BuyerCode", model.BuyerCode);
