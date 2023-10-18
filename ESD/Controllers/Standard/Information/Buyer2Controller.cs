@@ -119,6 +119,32 @@ namespace ESD.Controllers.Standard.Information
             return Ok(returnData);
         }
 
+        [HttpPut("delete-buyer")]
+        [PermissionAuthorization(PermissionConst.BUYER_DELETE)]
+        public async Task<IActionResult> Delete([FromBody] Buyer2Dto model)
+        {
+            var token = Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+            var userId = _jwtService.ValidateToken(token);
+            model.modifiedBy = long.Parse(userId);
+            var result = await _Buyer2Service.Delete(model);
+
+            var returnData = new ResponseModel<Buyer2Dto?>();
+            returnData.ResponseMessage = result;
+            switch (result)
+            {
+                case StaticReturnValue.SYSTEM_ERROR:
+                    returnData.HttpResponseCode = 500;
+                    break;
+                case StaticReturnValue.SUCCESS:
+                    break;
+                default:
+                    returnData.HttpResponseCode = 400;
+                    break;
+            }
+
+            return Ok(returnData);
+        }
+
 
 
 

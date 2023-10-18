@@ -150,7 +150,7 @@ namespace ESD.Services.Standard.Information
         }
         public async Task<string> Delete(Buyer2Dto model)
         {
-            string proc = "Usp_Buyer_Delete";
+            string proc = "Usp_Buyer2_Delete";
             var param = new DynamicParameters();
             param.Add("@BuyerId", model.BuyerId);
             param.Add("@modifiedBy", model.modifiedBy);
@@ -165,7 +165,7 @@ namespace ESD.Services.Standard.Information
         public async Task<ResponseModel<IEnumerable<Buyer2Dto>?>> GetActive(Buyer2Dto model)
         {
             var returnData = new ResponseModel<IEnumerable<Buyer2Dto>?>();
-            var proc = $"Usp_Buyer_GetActive";
+            var proc = $"Usp_Buyer2_GetActive";
             var data = await _sqlDataAccess.LoadDataUsingStoredProcedure<Buyer2Dto>(proc);
 
             if (!data.Any())
