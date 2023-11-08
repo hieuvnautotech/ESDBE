@@ -16,7 +16,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
-
+using Project1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +27,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 ////Auto adding services to the container.
 builder.Services.RegisterServices(builder.Configuration);
+builder.Services.AddSingleton<IIotDBService, IotDbService>();
+
 
 builder.Services.AddCors(options =>
 {
